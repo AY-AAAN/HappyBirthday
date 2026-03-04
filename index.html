@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Wife</title>
+    <style>
+        :root {
+            --primary-color: #ff4d6d; /* Romantic Rose */
+            --bg-color: #fff0f3;
+            --envelope-color: #ffb3c1;
+            --paper-color: #ffffff;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* The Container */
+        .container {
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* The Envelope Base */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: var(--envelope-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* The Letter inside */
+        .letter {
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 90%;
+            background: var(--paper-color);
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.6s ease;
+            z-index: 2;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .letter h1 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .letter p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* The Flap */
+        .envelope-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            z-index: 4;
+            border-top: 100px solid var(--primary-color);
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            transform-origin: top;
+            transition: transform 0.6s ease;
+        }
+
+        /* Front of Envelope */
+        .envelope-wrapper::after {
+            content: "";
+            position: absolute;
+            z-index: 3;
+            border-top: 100px solid transparent;
+            border-left: 150px solid var(--envelope-color);
+            border-right: 150px solid var(--envelope-color);
+            border-bottom: 100px solid var(--envelope-color);
+            bottom: 0;
+        }
+
+        /* Hover/Open State */
+        .container:hover .envelope-wrapper::before {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .container:hover .letter {
+            transform: translateY(-100px);
+            z-index: 5;
+        }
+
+        .instruction {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            text-align: center;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="envelope-wrapper">
+            <div class="letter">
+                <h1>Happy Birthday!</h1>
+                <p>To my beautiful wife,<br><br>
+                You make every day brighter just by being in it. Here is to another year of love and laughter.<br><br>
+                <strong>I love you!</strong></p>
+            </div>
+        </div>
+        <p class="instruction">Hover to Open ✉️</p>
+    </div>
+
+</body>
+</html>
