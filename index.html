@@ -3,34 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Letter For You</title>
-    <link rel="stylesheet" href="style.css">
+    <title>A Special Surprise</title>
+    <style>
+        /* CSS - This handles the look and the "Full Screen" magic */
+        :root {
+            --bg: #fce4ec;
+            --env-color: #f06292;
+            --env-flap: #d81b60;
+            --paper: #ffffff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Prevents scrolling while closed */
+            background-color: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Georgia', serif;
+        }
+
+        /* The Envelope */
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background-color: var(--env-color);
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        /* The Flap */
+        .envelope-wrapper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            border-top: 100px solid var(--env-flap);
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            transform-origin: top;
+            transition: transform 0.5s ease;
+        }
+
+        /* Text inside the envelope when closed */
+        .envelope-wrapper .tap-me {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 120px;
+            color: white;
+            font-weight: bold;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        /* THE FULL SCREEN LETTER - Initially hidden and tiny */
+        .full-page-letter {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background-color: var(--paper);
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.8s cubic-bezier(0.17, 0.84, 0.44, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        /* When the 'open' class is added via JS */
+        .full-page-letter.open {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+            visibility: visible;
+            padding: 20px;
+        }
+
+        .letter-content {
+            max-width: 600px;
+            text-align: center;
+            color: #333;
+            line-height: 1.6;
+            transform: scale(0.8);
+            transition: transform 0.5s ease 0.5s;
+        }
+
+        .full-page-letter.open .letter-content {
+            transform: scale(1);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #eee;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+        h1 { color: var(--env-flap); font-size: 2.5rem; }
+        .signature { margin-top: 40px; font-style: italic; font-size: 1.2rem; }
+    </style>
 </head>
 <body>
 
-    <div class="envelope-container" id="envelope">
-        <div class="envelope">
-            <div class="flap"></div>
-            <div class="body-env"></div>
-            <div class="letter-preview">
-                <p>Click to Open</p>
-            </div>
-        </div>
+    <div class="envelope-wrapper" id="envelope">
+        <div class="tap-me">CLICK TO OPEN 💌</div>
     </div>
 
-    <div class="full-letter" id="fullLetter">
-        <button class="close-btn" id="closeBtn">✕ Close</button>
+    <div class="full-page-letter" id="letter">
+        <button class="close-btn" onclick="closeLetter(event)">Close ✕</button>
+        
         <div class="letter-content">
-            <h1>Happy Birthday, My Love</h1>
-            <hr>
-            <p>Dearest [Wife's Name],</p>
-            <p>I wanted to create something as unique and beautiful as you are. Today isn't just a celebration of your birth, but a celebration of every moment I get to spend by your side.</p>
-            <p>You are my best friend, my rock, and my greatest adventure. May this year bring you as much joy as you bring to my life every single day.</p>
-            <p>With all my love,</p>
-            <p class="signature">— Your Husband</p>
+            <h1>Happy Birthday!</h1>
+            <p>To my amazing wife,</p>
+            <p>HAPPY BIRTHDAY MY BEAUTIFUL AMAZING CARING LOVING WIFE!!!!</p>
+            <p>Sadly I can't be there to celebrate your birthday with you but I wanted to give you something for your birthday. </p>
+            <p>I realized that even if I had everything in this world it would never help me show how much I love you.</p>
+            <p>So I decided to make a website and a letter instead.</p>
+            <p> </p>
+            <p>I have been thinking about the time we first met. Do you remember the time I suddenly updated you about what I was doing at the time,</p>
+            <p>like I told you about the PR I did at the gym and you asked what we were to each other as a joke, but I had no idea that simple moment lead to you becoming my wife.</p>
+            <p>Looking back at the days we have been together from the being lowkey with your friends to being sweet with one another.</p>
+            <p>Then I had an issue with my PC and couldnt fix it that day and couldn't play for such a long time then our VC's and chat were so limited yet you made me stay through the challenge.</p>
+            <p> </p>
+            <p>Since the night you said yes (February 10, 2026 at 11:59pm) we have been so strong and you have been my first in many things from Girlfriend to having dates and buying if the egg thing on Valorant.</p>
+            <p>You are the most Beautiful, amazing, energetic, caring, loving, and hottest girl that I am happy to call my wife even if its not legally.</p>
+            <p>I am the happiest man and so grateful for joining your call that night and listened to the signs and shooting my shot to court you baby.</p>
+            <p>I promise you I will make you the happiest person in the world I will make sure that even if you have problems and in your darkest i'll be holding your hand leading you to success and be the light in your world.</p>
+            <p></p>
+            <p>As we are together I will make it that we stay together for the rest of our lives. I promise you this that I will be your safe place, a shoulder to cry on, and someone you can go to no matter what happens.</p>
+            <p>I will choose you, every single second of our lives, and to build a life and home with you that makes you happy as you make me. I can't wait to be able to be with you in pampanga and the dates we will have.</p>
+            <p>I will make sure that your Family will accept me no matter the challenge they may throw at me even if it seems impossible if it means to get their approval of us dating I will do it even if it means I must lose a part of me.</p>
+            <p>No matter the challenges given and barriers I will take down each and every challenge like a Knight fighting a foe so powerfull that I must fight alone and no matter what you do in life I will always be here supporting you.</p>
+            <p> </p>
+            <div class="signature">I love you always, <br> Ian aka Anthony aka your husband</div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // JS - This listens for the click and triggers the animation
+        const envelope = document.getElementById('envelope');
+        const letter = document.getElementById('letter');
+
+        envelope.addEventListener('click', function() {
+            // 1. "Open" the envelope flap visually
+            this.style.setProperty('--env-flap', 'transparent'); // Simple way to hide flap
+            
+            // 2. Make the letter take over the screen
+            letter.classList.add('open');
+        });
+
+        function closeLetter(event) {
+            event.stopPropagation(); // Prevents clicking the close button from re-opening the envelope
+            letter.classList.remove('open');
+        }
+    </script>
+
 </body>
 </html>
