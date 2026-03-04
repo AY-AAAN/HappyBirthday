@@ -6,13 +6,14 @@
     <title>Happy Birthday My Love</title>
     <style>
         :root {
-            /* Purple Theme Colors */
+            /* Deep Purple & Lavender Theme */
             --bg: #f3e5f5;
-            --env-color: #9c27b0;
-            --env-flap: #7b1fa2;
+            --env-color: #7b1fa2;
+            --env-flap: #4a148c;
             --paper: #ffffff;
-            --text: #4a148c;
+            --text: #311b92;
             --accent: #e1bee7;
+            --heart-color: #9c27b0;
         }
 
         /* Base Setup */
@@ -23,54 +24,60 @@
             height: 100%;
             background-color: var(--bg);
             font-family: 'Georgia', serif;
-            overflow: hidden; /* Prevent scroll on the main container */
+            overflow: hidden; /* Keeps the background clean */
         }
 
-        /* Center the envelope on load */
+        /* Main Container */
         .main-container {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             width: 100%;
+            position: relative;
         }
 
         /* The Envelope */
         .envelope-wrapper {
             position: relative;
-            width: 280px;
-            height: 180px;
+            width: 300px;
+            height: 200px;
             background-color: var(--env-color);
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             z-index: 5;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .envelope-wrapper:hover { transform: scale(1.05); }
+        .envelope-wrapper:hover { 
+            transform: scale(1.08) rotate(-1deg); 
+        }
 
+        /* Envelope Flap */
         .envelope-wrapper::before {
             content: "";
             position: absolute;
-            top: 0; left: 0; z-index: 3;
-            border-top: 90px solid var(--env-flap);
-            border-left: 140px solid transparent;
-            border-right: 140px solid transparent;
+            top: 0; left: 0; z-index: 6;
+            border-top: 100px solid var(--env-flap);
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
             transform-origin: top;
             transition: transform 0.5s ease;
         }
 
         .tap-me {
             position: absolute;
-            width: 100%;
-            text-align: center;
-            top: 110px;
+            top: 120px;
             color: white;
             font-weight: bold;
-            letter-spacing: 1px;
-            z-index: 4;
+            letter-spacing: 2px;
+            z-index: 7;
             font-family: sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
         }
 
         /* FULL PAGE LETTER */
@@ -84,7 +91,7 @@
             z-index: 10;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
             overflow-y: auto; 
             display: block; 
             box-sizing: border-box;
@@ -95,66 +102,85 @@
             visibility: visible;
         }
 
-        /* Content Styling */
+        /* Letter Content */
         .letter-content {
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto;
-            padding: 80px 25px 100px 25px;
+            padding: 100px 30px;
             text-align: center;
             color: var(--text);
-            line-height: 1.8;
+            line-height: 2;
             position: relative;
-            z-index: 12;
+            z-index: 15; /* Sits above the floating hearts */
         }
 
         .letter-content h1 {
             color: var(--env-flap);
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             margin-bottom: 40px;
+            font-family: 'Palatino', serif;
+        }
+
+        .letter-content p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
         }
 
         .close-btn {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid #ddd;
-            padding: 8px 16px;
+            top: 30px;
+            right: 30px;
+            background: var(--env-flap);
+            color: white;
+            border: none;
+            padding: 10px 20px;
             cursor: pointer;
-            border-radius: 20px;
-            z-index: 20;
+            border-radius: 30px;
+            z-index: 100;
             font-family: sans-serif;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: background 0.3s;
         }
 
+        .close-btn:hover { background: var(--env-color); }
+
         .signature {
-            margin-top: 60px;
+            margin-top: 80px;
             font-style: italic;
-            font-size: 1.3rem;
-            border-top: 1px solid var(--accent);
-            padding-top: 30px;
+            font-size: 1.4rem;
+            border-top: 2px solid var(--bg);
+            padding-top: 40px;
             color: var(--env-flap);
         }
 
-        /* Floating Hearts Animation CSS */
+        .egg-icon { font-size: 2rem; margin: 20px 0; }
+
+        /* FLOATING HEARTS ANIMATION */
         .heart {
             position: fixed;
-            color: #9c27b0;
-            font-size: 20px;
+            bottom: -100px; /* Start well below view */
+            color: var(--heart-color);
             user-select: none;
             pointer-events: none;
-            z-index: 11; /* Sit behind the text but above the background */
-            animation: floatUp linear forwards;
+            z-index: 11; /* Floating behind text, above paper background */
+            animation: floatAndSway linear forwards;
         }
 
-        @keyframes floatUp {
+        @keyframes floatAndSway {
             0% {
-                transform: translateY(100vh) scale(0);
+                transform: translateY(0) translateX(0) rotate(0deg) scale(0.5);
                 opacity: 0;
             }
-            10% { opacity: 0.7; }
-            90% { opacity: 0.7; }
+            10% {
+                opacity: 0.7;
+            }
+            50% {
+                /* Mid-way sway */
+                transform: translateY(-50vh) translateX(40px) rotate(20deg) scale(1.1);
+            }
             100% {
-                transform: translateY(-10vh) scale(1.5);
+                /* Reach the very top and disappear */
+                transform: translateY(-120vh) translateX(-40px) rotate(-20deg) scale(1.5);
                 opacity: 0;
             }
         }
@@ -207,47 +233,64 @@
         let heartInterval;
 
         envelope.addEventListener('click', function() {
+            // Envelope disappears smoothly
             this.style.opacity = '0';
-            this.style.transition = 'opacity 0.3s ease';
+            this.style.pointerEvents = 'none';
             
             setTimeout(() => {
                 letter.classList.add('open');
                 letter.scrollTop = 0;
-                startHearts(); // Start the hearts when letter opens
-            }, 300);
+                startHearts(); // Hearts start when the letter opens
+            }, 400);
         });
 
         function closeLetter(event) {
             event.stopPropagation();
             letter.classList.remove('open');
-            stopHearts(); // Stop hearts when closed
+            stopHearts(); 
             setTimeout(() => {
                 envelope.style.opacity = '1';
-            }, 600);
+                envelope.style.pointerEvents = 'auto';
+            }, 800);
         }
 
-        // Heart Animation Logic
+        // Heart Generation Logic
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = '💜'; // You can change this to ❤️ if you prefer
+            
+            // Randomly choose between a heart and a sparkle
+            const symbols = ['💜', '💜', '💜', '✨', '🤍'];
+            heart.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            // Random horizontal start (0 to 100% of screen width)
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 3 + 2 + 's'; // 2-5 seconds
+            
+            // Random floating duration (faster and slower hearts)
+            const duration = Math.random() * 3 + 4; // 4 to 7 seconds
+            heart.style.animationDuration = duration + 's';
+            
+            // Random sizes for depth
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
             
             document.body.appendChild(heart);
 
-            // Remove heart after animation ends
+            // Cleanup: remove element after its specific animation ends
             setTimeout(() => {
                 heart.remove();
-            }, 5000);
+            }, duration * 1000);
         }
 
         function startHearts() {
-            heartInterval = setInterval(createHeart, 300); // New heart every 300ms
+            // Creates a new heart every 350ms for a lush, full effect
+            heartInterval = setInterval(createHeart, 350);
         }
 
         function stopHearts() {
             clearInterval(heartInterval);
+            // Optional: remove all existing hearts immediately on close
+            const existingHearts = document.querySelectorAll('.heart');
+            existingHearts.forEach(h => h.remove());
         }
     </script>
 
